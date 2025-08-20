@@ -27,7 +27,7 @@ def shop_trip() -> None:
             total, receipt = calculations.purchases(
                 total, receipt, customer, shop)
             trip_cost = round(fuel_cost * 2 + total, 2)
-            # Ugly indentations - because of flake8
+            # Ugly indentations - because of flake8.
             print(
                 f"{customer.name}'s trip to the",
                 f"{shop.name} costs {trip_cost}")

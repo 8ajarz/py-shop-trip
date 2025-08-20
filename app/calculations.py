@@ -34,6 +34,7 @@ def get_receipt(
     test_time = datetime(2021, 1, 4, 12, 33, 41)
     time_now = datetime.strftime(test_time, "%d/%m/%Y %H:%M:%S")
     res_list = ["Date: " + time_now, ]
+    # Ugly indentations - because of flake8.
     res_list.append(
         f"Thanks, {customer.name}, for your purchase!\nYou have bought"
         ":"
