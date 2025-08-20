@@ -42,7 +42,7 @@ def get_receipt(
     for item in receipt:
         quantity = receipt[item][0]
         price = receipt[item][1]
-        price_float = float(price)
+        price = float(price)
         if price.is_integer():
             price = int(price)
         res_list.append(f"{quantity} {item}s for {price} dollars")
