@@ -33,7 +33,8 @@ def get_receipt(
         total: int | float = None) -> str:
     receipt = {} if receipt is None else receipt
     total = 0 if total is None else total
-    time_now = datetime.datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+    time_now = datetime.datetime.now()
+    time_now = time_now.strftime("%d/%m/%Y %H:%M:%S")
     res_list = ["Date: " + time_now]
     # Ugly indentations - because of flake8.
     res_list.append(
