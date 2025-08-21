@@ -19,6 +19,9 @@ def shop_trip() -> None:
         print(f"{customer.name} has {customer.money} dollars")
         nearest_shop = []
         for shop in shops:
+            for product in customer.product_cart:
+                if product not in shop.products:
+                    continue
             total = 0
             receipt = {}
             trip_dist = calculations.get_distance(shop, customer)
@@ -32,28 +35,24 @@ def shop_trip() -> None:
                 f"{customer.name}'s trip to the",
                 f"{shop.name} costs {trip_cost}")
             if not nearest_shop:
-                nearest_shop.append(shop)
-                nearest_shop.append(trip_cost)
+                nearest_shop = shop
+                nearest_shop.trip_cost = trip_cost
             else:
-                if trip_cost < nearest_shop[1]:
-                    nearest_shop[0] = shop
-                    nearest_shop[1] = trip_cost
-
-        if total > customer.money:
+                if trip_cost < nearest_shop.trip_cost:
+                    nearest_shop = shop
+                    nearest_shop.trip_cost = trip_cost
+        budget = customer.money - nearest_shop.trip_cost
+        if 0 > budget:
             print(
                 f"{customer.name} doesn't have enough money",
                 "to make a purchase in any shop")
         else:
-            print(f"{customer.name} rides to {nearest_shop[0].name}\n")
+            print(f"{customer.name} rides to {nearest_shop.name}\n")
             total, receipt = calculations.purchases(
-                0, {}, customer, nearest_shop[0])
+                0, None, customer, nearest_shop)
             print(calculations.get_receipt(receipt, customer, total))
-            budget = customer.money - nearest_shop[1]
             print(f"\n{customer.name} rides home")
             print(f"{customer.name} now has {budget} dollars\n")
-
-
-shop_trip()
 
 
 if __name__ == "__main__":

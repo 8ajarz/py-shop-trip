@@ -1,4 +1,5 @@
-from datetime import datetime
+import datetime
+
 from app.customer import Customer
 from app.shop import Shop
 
@@ -15,9 +16,10 @@ def get_distance(shop: Shop, customer: Customer) -> float:
 
 def purchases(
         total: int,
-        receipt: dict(),
+        receipt: None,
         customer: Customer,
         shop: Shop) -> tuple:
+    receipt = {} if receipt is None else receipt
     for product, quantity in customer.product_cart.items():
         price = shop.products[product] * quantity
         receipt[product] = quantity, price
@@ -26,14 +28,13 @@ def purchases(
 
 
 def get_receipt(
-        receipt: dict(),
+        receipt: None,
         customer: Customer,
-        total: int | float) -> str:
-    # Time_now = datetime.strftime(datetime.now(), "%d/%m/%Y %H:%M:%S")
-    # Unfortunately, test requires the mocked datetime
-    test_time = datetime(2021, 1, 4, 12, 33, 41)
-    time_now = datetime.strftime(test_time, "%d/%m/%Y %H:%M:%S")
-    res_list = ["Date: " + time_now, ]
+        total: int | float = None) -> str:
+    receipt = {} if receipt is None else receipt
+    total = 0 if total is None else total
+    time_now = datetime.datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+    res_list = ["Date: " + time_now]
     # Ugly indentations - because of flake8.
     res_list.append(
         f"Thanks, {customer.name}, for your purchase!\nYou have bought"
